@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open When...</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f7efe7;
+    color: #62483f;
+    font-family: Georgia, serif;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 65px 20px;
+    background:
+      radial-gradient(circle at 10% 10%, #e8c9c555, transparent 28%),
+      radial-gradient(circle at 90% 90%, #d7aaa555, transparent 30%);
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.eyebrow {
+    font: 10px Arial, sans-serif;
+    letter-spacing: 4px;
+    color: #b87978;
+}
+
+h1 {
+    font-size: clamp(45px, 7vw, 72px);
+    font-weight: normal;
+    margin: 22px 0;
+}
+
+h1 span {
+    color: #b87978;
+    font-style: italic;
+}
+
+.intro {
+    color: #947a70;
+    line-height: 1.9;
+    font-size: 15px;
+    margin-bottom: 45px;
+}
+
+.envelopes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.envelope {
+    background: #fffaf5;
+    border: 1px solid #e7d8cc;
+    padding: 35px 20px;
+    cursor: pointer;
+    transition: .35s;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.envelope:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 30px #62483f18;
+    background: #f8e9e3;
+}
+
+.envelope .symbol {
+    font-size: 32px;
+    color: #b87978;
+    margin-bottom: 18px;
+}
+
+.envelope h2 {
+    font-weight: normal;
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.envelope p {
+    color: #a17e73;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.letter-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: #46352fbf;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.letter {
+    background: #fffaf5;
+    width: 100%;
+    max-width: 550px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 20px 60px #0003;
+    animation: openLetter .4s ease;
+    text-align: left;
+}
+
+.letter h2 {
+    font-size: 28px;
+    font-weight: normal;
+    color: #b87978;
+    margin-bottom: 25px;
+}
+
+.letter-content {
+    font-size: 16px;
+    line-height: 2;
+    color: #72594f;
+    white-space: pre-line;
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    border: none;
+    background: none;
+    color: #947a70;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.signature {
+    margin-top: 25px;
+    font-style: italic;
+    color: #b87978;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 55px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: #fffaf5;
+    background: #62483f;
+    padding: 14px 22px;
+    font: 10px Arial, sans-serif;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.nav-btn:hover {
+    background: #b87978;
+}
+
+@keyframes openLetter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media(max-width: 550px) {
+    .envelopes {
+        grid-template-columns: 1fr;
+    }
+
+    .letter {
+        padding: 35px 25px;
+    }
+
+    .navigation {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="page">
+<div class="container">
+
+    <p class="eyebrow">CHAPTER 04 — LITTLE LETTERS, BIG FEELINGS</p>
+
+    <h1>Open <span>When...</span></h1>
+
+    <p class="intro">
+        Not every letter needs a special occasion.<br>
+        Some are meant for the days when you need a little piece of me.
+    </p>
+
+    <section class="envelopes">
+
+        <div class="envelope" onclick="openLetter(0)">
+            <div class="symbol">♡</div>
+            <h2>Open when you miss me</h2>
+            <p>A little reminder that I'm right here.</p>
+        </div>
+
+        <div class="envelope" onclick="openLetter(1)">
+            <div class="symbol">✉</div>
+            <h2>Open when you need a smile</h2>
+            <p>Emergency dose of nonsense and love.</p>
+        </div>
+
+        <div class="envelope" onclick="openLetter(2)">
+            <div class="symbol">✧</div>
+            <h2>Open when life gets difficult</h2>
+            <p>For the days that feel a little too heavy.</p>
+        </div>
+
+        <div class="envelope" onclick="openLetter(3)">
+            <div class="symbol">∞</div>
+            <h2>Open when you doubt yourself</h2>
+            <p>Read this when you forget how wonderful you are.</p>
+        </div>
+
+    </section>
+
+    <nav class="navigation">
+        <a href="plot_twist.html" class="nav-btn">← PREVIOUS</a>
+        <a href="seven_years.html" class="nav-btn">NEXT CHAPTER →</a>
+    </nav>
+
+</div>
+</main>
+
+<div class="letter-overlay" id="letterOverlay" onclick="closeOutside(event)">
+    <div class="letter">
+
+        <button class="close" onclick="closeLetter()">×</button>
+
+        <h2 id="letterTitle"></h2>
+
+        <div class="letter-content" id="letterContent"></div>
+
+        <p class="signature">Always yours, ♡</p>
+
+    </div>
+</div>
+
+<script>
+
+const letters = [
+
+{
+    title: "When you miss me... ♡",
+    content: `Hey you,
+
+If you're reading this, I guess you miss me a little.
+
+Well, I wish I could magically appear beside you right now, annoy you for absolutely no reason, steal your attention and make you smile.
+
+Until then, remember that somewhere there's someone who thinks about you in the most random moments of the day.
+
+And yes, that someone is me.
+
+I miss you too. More than I probably say.`
+},
+
+{
+    title: "When you need a smile... ✉",
+    content: `Hello, idiot.
+
+First of all, why are you sad?
+
+Second of all, have you forgotten who you are?
+
+You're literally my favourite human to annoy. My personal headache. My favourite notification.
+
+So here's your official instruction: smile a little.
+
+Because your smile is one of my favourite things in this world.`
+},
+
+{
+    title: "When life gets difficult... ✧",
+    content: `Hey love,
+
+I know life doesn't always go according to plan.
+
+Some days will be confusing. Some days will be exhausting. And sometimes you'll feel like you're not doing enough.
+
+But please don't be too hard on yourself.
+
+You don't have to figure everything out today.
+
+Take a breath. Take your time.
+
+I hope you never forget that you deserve patience, kindness and happiness.
+
+I'm always cheering for you.`
+},
+
+{
+    title: "When you doubt yourself... ∞",
+    content: `Listen to me carefully.
+
+I wish you could see yourself through my eyes, even for a moment.
+
+Maybe then you'd understand why I believe in you so much.
+
+I see someone with so much potential, someone who deserves good things, someone who can do far more than he gives himself credit for.
+
+So please don't give up on yourself.
+
+I'm proud of you, even on the days when you aren't proud of yourself.`
+}
+
+];
+
+function openLetter(index) {
+    document.getElementById("letterTitle").innerText =
+        letters[index].title;
+
+    document.getElementById("letterContent").innerText =
+        letters[index].content;
+
+    document.getElementById("letterOverlay").style.display = "flex";
+}
+
+function closeLetter() {
+    document.getElementById("letterOverlay").style.display = "none";
+}
+
+function closeOutside(event) {
+    if (event.target.id === "letterOverlay") {
+        closeLetter();
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closeLetter();
+    }
+});
+
+</script>
+
+</body>
+</html>

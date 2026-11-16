@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Birthday Treasure Hunt</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+    --cream: #f8f0e5;
+    --paper: #fffaf2;
+    --brown: #65483c;
+    --dark: #39271f;
+    --pink: #d9a9a4;
+    --gold: #bd965c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at top, #fffaf2, transparent 70%),
+        #f3e7d9;
+    color: var(--brown);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+}
+
+.page {
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+    padding: 35px 20px 55px;
+    text-align: center;
+}
+
+.eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #a47e60;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 7vw, 55px);
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 12px;
+}
+
+h1 em {
+    color: #bd8582;
+}
+
+.intro {
+    max-width: 440px;
+    margin: 0 auto;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: #866c5d;
+}
+
+.divider {
+    width: 90px;
+    height: 1px;
+    background: var(--gold);
+    margin: 25px auto;
+}
+
+/* MAP */
+
+.map-container {
+    position: relative;
+    max-width: 650px;
+    margin: 35px auto 25px;
+    background: #e9d7bc;
+    border: 9px solid #d6bd9c;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 15px 40px #80604422;
+    transform: rotate(-1deg);
+}
+
+.map {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.35 / 1;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 20% 25%, #d8bd98 0%, transparent 30%),
+        radial-gradient(ellipse at 80% 70%, #c7ae89 0%, transparent 32%),
+        #e9d7b9;
+    border: 1px solid #c5a980;
+}
+
+.map::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .25;
+    background-image: repeating-linear-gradient(
+        35deg,
+        transparent,
+        transparent 9px,
+        #9d815d 10px,
+        transparent 11px
+    );
+    pointer-events: none;
+}
+
+.map-title {
+    position: absolute;
+    top: 6%;
+    width: 100%;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(17px, 4vw, 25px);
+    color: #785a3d;
+    z-index: 2;
+}
+
+.map-deco {
+    position: absolute;
+    font-size: clamp(18px, 4vw, 27px);
+    opacity: .75;
+}
+
+.tree1 { top: 28%; left: 8%; }
+.tree2 { top: 65%; left: 10%; }
+.tree3 { top: 27%; right: 10%; }
+.tree4 { bottom: 7%; right: 18%; }
+.flower { top: 75%; left: 45%; }
+.cloud { top: 15%; left: 15%; opacity: .4; }
+
+.map-path {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.map-path path {
+    fill: none;
+    stroke: #94734e;
+    stroke-width: 2.5;
+    stroke-dasharray: 7 8;
+    stroke-linecap: round;
+    opacity: .75;
+}
+
+.hotspot {
+    position: absolute;
+    z-index: 4;
+    border: 1px solid #94734e;
+    background: #f8ebd4;
+    color: #73523c;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 19px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px #63452c33;
+    transition: .3s;
+    animation: pulse 2.2s infinite;
+}
+
+.hotspot:hover {
+    transform: scale(1.2);
+    background: #fffaf0;
+}
+
+.hotspot.found {
+    background: #a67d61;
+    color: white;
+    border-color: #a67d61;
+    animation: none;
+    transform: scale(.95);
+}
+
+.spot1 { top: 36%; left: 26%; }
+.spot2 { top: 60%; left: 53%; }
+.spot3 { top: 30%; left: 77%; }
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 #a67d6155; }
+    50% { box-shadow: 0 0 0 10px #a67d6100; }
+}
+
+.xmark {
+    position: absolute;
+    bottom: 9%;
+    right: 10%;
+    font-size: 35px;
+    color: #87533e;
+    z-index: 2;
+    opacity: .85;
+}
+
+/* PROGRESS */
+
+.progress-area {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #947762;
+    margin-bottom: 9px;
+}
+
+.progress-track {
+    height: 5px;
+    background: #dfcbb4;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #a67b59;
+    transition: width .5s;
+}
+
+.hint {
+    min-height: 45px;
+    margin: 20px auto;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: #8b7060;
+}
+
+/* CHEST */
+
+.chest-section {
+    display: none;
+    padding: 30px 10px;
+    animation: appear 1s ease forwards;
+}
+
+.chest-section.show {
+    display: block;
+}
+
+.chest {
+    display: block;
+    font-size: clamp(75px, 17vw, 115px);
+    margin: 20px auto;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    filter: drop-shadow(0 12px 12px #77502d33);
+    transition: .4s;
+    animation: float 2.5s infinite ease-in-out;
+}
+
+.chest:hover {
+    transform: scale(1.1);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.chest-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--dark);
+}
+
+.chest-sub {
+    margin-top: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    color: #947565;
+}
+
+/* BUTTON */
+
+.main-btn {
+    border: 1px solid #a67c5d;
+    padding: 13px 28px;
+    background: #765344;
+    color: #fff7ec;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: .3s;
+    margin-top: 15px;
+}
+
+.main-btn:hover {
+    background: #50382e;
+    transform: translateY(-2px);
+}
+
+/* BIRTHDAY REVEAL */
+
+.birthday {
+    display: none;
+    padding: 35px 5px 15px;
+    animation: appear 1.2s ease forwards;
+}
+
+.birthday.show {
+    display: block;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.birthday-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #a67d5b;
+    text-transform: uppercase;
+}
+
+.birthday h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(35px, 8vw, 55px);
+    font-weight: 400;
+    color: #704b3b;
+    margin: 15px 0;
+}
+
+.cake-wrap {
+    position: relative;
+    max-width: 390px;
+    margin: 20px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #fffaf1, #f1dfcd);
+    border: 1px solid #e1c7a9;
+    border-radius: 5px;
+    box-shadow: 0 12px 35px #805e3b1a;
+}
+
+.cake {
+    position: relative;
+    width: 220px;
+    height: 150px;
+    margin: 45px auto 15px;
+}
+
+.cake-top {
+    position: absolute;
+    top: 20px;
+    width: 220px;
+    height: 40px;
+    background: #edc9a9;
+    border-radius: 50%;
+    border: 2px solid #b98268;
+    z-index: 3;
+}
+
+.cake-body {
+    position: absolute;
+    top: 37px;
+    width: 220px;
+    height: 100px;
+    background: linear-gradient(90deg, #8d5540, #bd8162, #88513c);
+    border-radius: 0 0 18px 18px;
+    border-bottom: 8px solid #744533;
+}
+
+.cake-cream {
+    position: absolute;
+    top: 55px;
+    height: 18px;
+    width: 220px;
+    background: #f5dfc8;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.cake-drip {
+    position: absolute;
+    top: 54px;
+    left: 12px;
+    width: 18px;
+    height: 33px;
+    background: #f5dfc8;
+    border-radius: 0 0 15px 15px;
+    z-index: 3;
+    box-shadow: 50px 5px 0 #f5dfc8,
+                100px 0 0 #f5dfc8,
+                150px 5px 0 #f5dfc8;
+}
+
+.candle {
+    position: absolute;
+    bottom: 104px;
+    width: 9px;
+    height: 43px;
+    background: repeating-linear-gradient(
+        45deg,
+        #fff4d9,
+        #fff4d9 5px,
+        #d99d8c 5px,
+        #d99d8c 9px
+    );
+    z-index: 5;
+    border-radius: 3px;
+}
+
+.c1 { left: 76px; }
+.c2 { left: 105px; }
+.c3 { left: 134px; }
+
+.flame {
+    position: absolute;
+    top: -17px;
+    left: 1px;
+    width: 7px;
+    height: 15px;
+    background: #ffc35c;
+    border-radius: 50% 50% 50% 50%;
+    box-shadow: 0 0 12px 4px #f7b54e99;
+    animation: flicker .6s infinite alternate;
+}
+
+@keyframes flicker {
+    from { transform: scale(.9) rotate(-5deg); }
+    to { transform: scale(1.15) rotate(5deg); }
+}
+
+.candles-out .flame {
+    display: none;
+}
+
+.cake-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    color: #876b57;
+    margin-top: 15px;
+}
+
+.final-message {
+    margin: 25px auto;
+    max-width: 500px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(23px, 5vw, 30px);
+    line-height: 1.5;
+    color: #714b3e;
+}
+
+.final-message em {
+    color: #b47d78;
+}
+
+.gift {
+    font-size: 36px;
+    margin: 15px;
+    animation: float 2s infinite ease-in-out;
+}
+
+.small-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: #947766;
+    margin: 20px auto;
+    line-height: 1.6;
+}
+
+/* CONFETTI */
+
+.confetti {
+    position: fixed;
+    top: -15px;
+    width: 8px;
+    height: 12px;
+    z-index: 100;
+    pointer-events: none;
+    animation: fall 3.5s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* FOOTER */
+
+.footer {
+    margin-top: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: #9a7b66;
+}
+
+.footer a {
+    color: #805a48;
+    text-decoration: none;
+    border-bottom: 1px solid #c5a58b;
+    padding-bottom: 3px;
+}
+
+@media(max-width: 500px) {
+    .page { padding: 28px 14px 45px; }
+    .map-container { padding: 8px; border-width: 6px; }
+    .hotspot { width: 35px; height: 35px; font-size: 16px; }
+    .cake-wrap { padding: 10px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="eyebrow">A little something, just for you</div>
+
+    <h1>The Birthday <em>Adventure</em></h1>
+
+    <p class="intro">
+        I've hidden a little surprise somewhere in this map.
+        Take your time, explore every corner...
+        your birthday treasure is waiting.
+    </p>
+
+    <div class="divider"></div>
+
+    <!-- TREASURE MAP -->
+
+    <div id="mapSection">
+
+        <div class="map-container">
+
+            <div class="map">
+
+                <div class="map-title">The Map of Little Wonders</div>
+
+                <div class="map-deco tree1">🌳</div>
+                <div class="map-deco tree2">🌿</div>
+                <div class="map-deco tree3">🌲</div>
+                <div class="map-deco tree4">🌳</div>
+                <div class="map-deco flower">✿</div>
+                <div class="map-deco cloud">☁</div>
+
+                <svg class="map-path" viewBox="0 0 600 440"
+                     preserveAspectRatio="none">
+                    <path d="M75 240 C130 160, 180 170, 210 205
+                    S300 320, 350 260
+                    S430 140, 480 175
+                    S520 260, 540 340"/>
+                </svg>
+
+                <button class="hotspot spot1"
+                    onclick="findTreasure(0)"
+                    aria-label="Find first treasure">✦</button>
+
+                <button class="hotspot spot2"
+                    onclick="findTreasure(1)"
+                    aria-label="Find second treasure">♡</button>
+
+                <button class="hotspot spot3"
+                    onclick="findTreasure(2)"
+                    aria-label="Find third treasure">✧</button>
+
+                <div class="xmark">✕</div>
+
+            </div>
+        </div>
+
+        <div class="progress-area">
+            <div class="progress-label">
+                <span>Treasure discovered</span>
+                <span id="progressText">0 / 3</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <p class="hint" id="hint">
+            Psst... those little symbols might be hiding something.
+        </p>
+
+    </div>
+
+    <!-- TREASURE CHEST -->
+
+    <div class="chest-section" id="chestSection">
+
+        <div class="eyebrow">You've found it!</div>
+
+        <div class="chest-text">Well, well... look what we have here.</div>
+
+        <p class="chest-sub">
+            All roads lead to a little birthday surprise.
+        </p>
+
+        <button class="chest" onclick="openChest()"
+            aria-label="Open birthday treasure chest">
+            🧰
+        </button>
+
+        <button class="main-btn" onclick="openChest()">
+            Open your treasure
+        </button>
+
+    </div>
+
+    <!-- BIRTHDAY CAKE REVEAL -->
+
+    <div class="birthday" id="birthday">
+
+        <div class="birthday-label">Your treasure has been found</div>
+
+        <h2>Happy Birthday,<br>Birthday Boy!</h2>
+
+        <div class="divider"></div>
+
+        <div class="cake-wrap">
+
+            <div class="cake" id="cake">
+
+                <div class="candle c1">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="candle c2">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="candle c3">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="cake-top"></div>
+                <div class="cake-cream"></div>
+                <div class="cake-drip"></div>
+                <div class="cake-body"></div>
+
+            </div>
+
+            <div class="cake-note">
+                Made with a little sweetness and a lot of love.
+            </div>
+
+        </div>
+
+        <p class="final-message">
+            Blow the candles,<br>
+            <em>gifts are waiting for you!</em>
+        </p>
+
+        <div class="gift">🎁 🎀 🎁</div>
+
+        <button class="main-btn" id="blowBtn"
+            onclick="blowCandles()">
+            Blow the candles ✨
+        </button>
+
+        <p class="small-note" id="afterBlow" style="display:none;">
+            Wishes made, candles blown...<br>
+            Now go on, birthday boy. Your surprises aren't over yet. ♡
+        </p>
+
+    </div>
+
+    <div class="footer">
+        Made with love, just for you ♡
+        <br><br>
+        <a href="index.html">← Back to the beginning</a>
+        &nbsp; · &nbsp;
+        <a href="open_when.html">Next surprise →</a>
+    </div>
+
+</div>
+
+<script>
+
+let found = [false, false, false];
+
+const messages = [
+    "A little sparkle, just like the little things that make you special. ✨",
+    "Some treasures are worth the journey. You're one of them. ♡",
+    "One last discovery... I think you're getting closer! 🌙"
+];
+
+function findTreasure(index) {
+
+    if (found[index]) return;
+
+    found[index] = true;
+
+    const buttons = document.querySelectorAll('.hotspot');
+    buttons[index].classList.add('found');
+    buttons[index].innerHTML = '✓';
+
+    const count = found.filter(Boolean).length;
+
+    document.getElementById('progressText').innerText =
+        count + ' / 3';
+
+    document.getElementById('progressFill').style.width =
+        (count / 3 * 100) + '%';
+
+    document.getElementById('hint').innerText =
+        messages[index];
+
+    if (count === 3) {
+
+        document.getElementById('hint').innerText =
+            "Every little clue has led you here. Your final treasure awaits... ♡";
+
+        setTimeout(() => {
+
+            document.getElementById('mapSection').style.display =
+                'none';
+
+            document.getElementById('chestSection')
+                .classList.add('show');
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            confetti(25);
+
+        }, 1300);
+    }
+}
+
+function openChest() {
+
+    const chest = document.querySelector('.chest');
+
+    chest.innerHTML = '✨💎✨';
+
+    chest.style.animation = 'none';
+
+    setTimeout(() => {
+
+        document.getElementById('chestSection')
+            .style.display = 'none';
+
+        document.getElementById('birthday')
+            .classList.add('show');
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+        confetti(90);
+
+    }, 800);
+}
+
+function blowCandles() {
+
+    document.getElementById('cake')
+        .classList.add('candles-out');
+
+    document.getElementById('blowBtn')
+        .style.display = 'none';
+
+    document.getElementById('afterBlow')
+        .style.display = 'block';
+
+    confetti(60);
+
+}
+
+function confetti(amount) {
+
+    const colors = [
+        '#bd8582',
+        '#d8b77e',
+        '#805846',
+        '#e9c9b5',
+        '#f2dfbd'
+    ];
+
+    for (let i = 0; i < amount; i++) {
+
+        const piece = document.createElement('div');
+
+        piece.className = 'confetti';
+
+        piece.style.left = Math.random() * 100 + 'vw';
+
+        piece.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.animationDuration =
+            (2 + Math.random() * 3) + 's';
+
+        piece.style.animationDelay =
+            Math.random() * 1.5 + 's';
+
+        piece.style.borderRadius =
+            Math.random() > 0.5 ? '50%' : '2px';
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+            piece.remove();
+        }, 6500);
+
+    }
+}
+
+</script>
+
+</body>
+</html>

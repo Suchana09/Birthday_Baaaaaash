@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To My Favourite Person</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f7efe7;
+    color: #62483f;
+    font-family: Georgia, serif;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 65px 20px;
+    background:
+        radial-gradient(circle at 10% 10%, #e8c9c555, transparent 30%),
+        radial-gradient(circle at 90% 90%, #d7aaa555, transparent 30%);
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.eyebrow {
+    font: 10px Arial, sans-serif;
+    letter-spacing: 4px;
+    color: #b87978;
+}
+
+h1 {
+    font-size: clamp(45px, 8vw, 80px);
+    font-weight: normal;
+    margin: 25px 0;
+    line-height: 1.1;
+}
+
+h1 span {
+    color: #b87978;
+    font-style: italic;
+}
+
+.subtitle {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #947a70;
+    margin-bottom: 40px;
+}
+
+.birthday-card {
+    max-width: 650px;
+    margin: auto;
+    padding: 45px;
+    background: #fffaf5;
+    box-shadow: 0 15px 45px #62483f18;
+    border: 1px solid #e7d8cc;
+    position: relative;
+}
+
+.birthday-card::before {
+    content: "♡";
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #d7aaa5;
+    font-size: 22px;
+}
+
+.birthday-card::after {
+    content: "♡";
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    color: #d7aaa5;
+    font-size: 22px;
+}
+
+.card-label {
+    font: 10px Arial, sans-serif;
+    letter-spacing: 3px;
+    color: #b87978;
+    margin-bottom: 25px;
+}
+
+.letter-title {
+    font-size: 30px;
+    font-weight: normal;
+    margin-bottom: 30px;
+    color: #62483f;
+}
+
+.letter-body {
+    text-align: left;
+    font-size: 15px;
+    line-height: 2.1;
+    color: #72594f;
+    white-space: pre-line;
+}
+
+.signature {
+    margin-top: 35px;
+    text-align: right;
+    font-style: italic;
+    color: #b87978;
+    font-size: 20px;
+}
+
+.surprise {
+    margin: 65px auto 35px;
+}
+
+.surprise h2 {
+    font-size: 30px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.surprise p {
+    color: #947a70;
+    line-height: 1.9;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.surprise-btn {
+    border: none;
+    background: #62483f;
+    color: #fffaf5;
+    padding: 16px 30px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.surprise-btn:hover {
+    background: #b87978;
+    transform: translateY(-4px);
+}
+
+.hidden-message {
+    display: none;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #f1dfd9;
+    animation: appear .7s ease;
+}
+
+.hidden-message h2 {
+    font-size: 28px;
+    font-weight: normal;
+    color: #b87978;
+    margin-bottom: 15px;
+}
+
+.hidden-message p {
+    font-size: 16px;
+    line-height: 2;
+    color: #72594f;
+}
+
+.final-footer {
+    margin-top: 70px;
+    padding-top: 30px;
+    border-top: 1px solid #e7d8cc;
+    color: #a17e73;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.navigation {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 45px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: #fffaf5;
+    background: #62483f;
+    padding: 14px 22px;
+    font: 10px Arial, sans-serif;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.nav-btn:hover {
+    background: #b87978;
+}
+
+.floating-heart {
+    position: fixed;
+    bottom: -30px;
+    color: #b87978;
+    opacity: .5;
+    pointer-events: none;
+    animation: floatUp 8s linear infinite;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: .5;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(40deg);
+        opacity: 0;
+    }
+}
+
+@media(max-width: 600px) {
+    .birthday-card {
+        padding: 35px 25px;
+    }
+
+    .letter-body {
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="page">
+
+<div class="container">
+
+    <p class="eyebrow">CHAPTER 06 — THE LAST PAGE, FOR NOW</p>
+
+    <h1>To my favourite <span>human.</span></h1>
+
+    <p class="subtitle">
+        If you've made it this far, there's just one last thing<br>
+        I really want you to read.
+    </p>
+
+    <section class="birthday-card">
+
+        <p class="card-label">A LETTER, WRITTEN WITH LOVE</p>
+
+        <h2 class="letter-title">
+            Happy Birthday, PP. ♡
+        </h2>
+
+        <div class="letter-body" id="letterText">
+To the boy who somehow became my favourite part of being alive,
+
+I sometimes wonder what the universe was doing when it decided to put you in my life. Was it being particularly kind to me that day? Did it know something I didn't? Or was it just casually making one of the biggest decisions of my life without telling me? Whatever it was, I hope it knows that I have a lot to thank it for.
+
+Happy Birthday PP. ❤️
+
+Seven years. Just think about that for a second. Seven years of you. Seven years of knowing you, annoying you, laughing with you, fighting with you, missing you, making memories with you and finding a thousand different reasons to love you. And somehow, even after all this time, I still get that little feeling in my heart when I think about you. Isn't that a little ridiculous? Seven years and you're still my favourite notification, my favourite person to talk nonsense with, and probably the only human being who can make me smile at my phone like an absolute idiot.
+
+I don't know if I tell you this enough, but having you in my life is one of those things I'll never be casual about. You have become a part of so many versions of me. The happy me, the emotional me, the dramatic me (which, let's be honest, deserves a separate birthday cake of its own), the overthinking me, the childish me and even the versions of me that I don't particularly like. You've seen so many sides of me, and somehow, you're still here.
+
+And that's something I will never take for granted.
+
+I hope you know that you don't always have to be strong. You don't have to have everything figured out. You don't have to pretend you're okay when you're not. I hope life is gentle with you, especially on the days when you are being too hard on yourself. I hope you never feel like you have to earn love by being perfect, successful, funny, or strong. You deserve love even on your most ordinary, unproductive, confused and difficult days.
+
+And if there's one thing I wish for you, it's that someday you get to see yourself through my eyes. Just once. Maybe then you'd understand why I think you're so precious. Why your happiness matters to me so much. Why even the smallest things about you can make an otherwise ordinary day feel special.
+
+I wish you all the happiness that you sometimes forget to wish for yourself. I wish you success, but more than that, I wish you peace. I wish you the courage to chase everything you've ever dreamt of. I wish you good health, beautiful opportunities, unexpected reasons to smile and people who love you genuinely. I hope you never have to shrink yourself to fit into places that don't appreciate you.
+
+And selfishly, I hope I get to witness so much of it.
+
+I want to be there for the big celebrations, obviously, but also for the incredibly ordinary days. The random conversations, the stupid jokes that aren't even funny but somehow make us laugh, the little updates about absolutely nothing, the moments when we have no idea what we're doing but are doing it anyway. I want more memories with you. More photographs, more laughter, more birthdays, more ridiculous arguments over the most unnecessary things. Basically, more of this us.
+
+I know we're not perfect. We have our moments, our moods, our misunderstandings and our own little ways of being difficult. But I hope we never stop choosing to understand each other. I hope we never become too familiar to appreciate one another. And I hope that even when life gets busy and everything around us changes, we never lose the comfort of being ourselves with each other.
+
+You know what? Sometimes I wish I could pause time during the simplest moments with you. Not because they're extraordinary, but because they're ours. And perhaps that's what makes them extraordinary to me.
+
+Thank you for being you. For all the laughs, for all the memories, for the conversations, for the comfort, for the madness and for being someone whose existence has made my life a little more beautiful.
+
+I don't know what the coming years have planned for you, but I hope they're wonderful. And wherever life takes you, I hope you always remember that there is someone who is ridiculously proud of you, who wants the absolute best for you, who will probably continue irritating you for no good reason, and who will always have a very special corner of her heart reserved just for you.
+
+And finally, one tiny birthday request: keep growing, keep dreaming, keep smiling that smile of yours, and please don't become too sensible with age. I have already invested seven years in your nonsense. I cannot afford to lose my favourite source of entertainment now.
+
+Happy Birthday Babe.
+
+If I could go back and meet every version of you all over again, I think I'd still want to know you. I'd still want to hear your stories, learn your little habits, laugh at your terrible jokes and collect all these years with you.
+
+Because, after everything, you're still someone I'm so incredibly grateful to have found.
+
+I hope this year loves you as much as you deserve to be loved.
+
+With all my love,
+        </div>
+
+        <p class="signature">
+            Yours, always. ♡
+        </p>
+
+    </section>
+
+    <section class="surprise">
+
+        <h2>Wait... one last thing.</h2>
+
+        <p>
+            You didn't think I'd let you leave without one final surprise,
+            did you?
+        </p>
+
+        <button class="surprise-btn" onclick="revealSurprise()">
+            ONE LAST THING ♡
+        </button>
+
+        <div class="hidden-message" id="hiddenMessage">
+
+            <h2>Here's to you. ✨</h2>
+
+            <p>
+                To all the dreams you're yet to chase,
+                all the places you're yet to see,
+                all the happiness waiting to find you,
+                and all the birthdays still to come.
+
+                <br><br>
+
+                I hope this year is kind to you.
+
+                <br><br>
+
+                And if you ever forget how loved you are,
+                come back and read this little website again.
+
+                <br><br>
+
+                Happy Birthday Cutie. ❤️
+            </p>
+
+        </div>
+
+    </section>
+
+    <footer class="final-footer">
+
+        MADE WITH LOVE, A LITTLE MADNESS<br>
+        AND SEVEN YEARS WORTH OF MEMORIES.
+
+        <br><br>
+
+        THE END OF THIS WEBSITE.<br>
+        NOT THE END OF OUR STORY. ♡
+
+    </footer>
+
+    <nav class="navigation">
+        <a href="seven_years.html" class="nav-btn">
+            ← BACK TO OUR STORY
+        </a>
+    </nav>
+
+</div>
+
+</main>
+
+<script>
+
+function revealSurprise() {
+
+    const message = document.getElementById("hiddenMessage");
+
+    message.style.display = "block";
+
+    message.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+// Floating hearts
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "floating-heart";
+    heart.innerHTML = Math.random() > 0.5 ? "♡" : "✧";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (6 + Math.random() * 5) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 11000);
+}
+
+setInterval(createHeart, 900);
+
+</script>
+
+</body>
+</html>

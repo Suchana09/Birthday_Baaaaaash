@@ -1,0 +1,535 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seven Years of Us</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f7efe7;
+    color: #62483f;
+    font-family: Georgia, serif;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 65px 20px;
+    background:
+      radial-gradient(circle at 10% 10%, #e8c9c555, transparent 28%),
+      radial-gradient(circle at 90% 90%, #d7aaa555, transparent 30%);
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 65px;
+}
+
+.eyebrow {
+    font: 10px Arial, sans-serif;
+    letter-spacing: 4px;
+    color: #b87978;
+}
+
+h1 {
+    font-size: clamp(43px, 7vw, 72px);
+    font-weight: normal;
+    margin: 20px 0;
+}
+
+h1 span {
+    color: #b87978;
+    font-style: italic;
+}
+
+.intro {
+    color: #947a70;
+    line-height: 1.9;
+    font-size: 15px;
+}
+
+.timeline {
+    position: relative;
+    max-width: 720px;
+    margin: auto;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #d7aaa5;
+    transform: translateX(-50%);
+}
+
+.year {
+    width: 50%;
+    padding: 15px 35px;
+    position: relative;
+    cursor: pointer;
+}
+
+.year:nth-child(odd) {
+    margin-left: 0;
+    text-align: right;
+}
+
+.year:nth-child(even) {
+    margin-left: 50%;
+    text-align: left;
+}
+
+.year::after {
+    content: "♡";
+    position: absolute;
+    top: 24px;
+    color: #b87978;
+    font-size: 18px;
+    background: #f7efe7;
+    z-index: 2;
+}
+
+.year:nth-child(odd)::after {
+    right: -10px;
+}
+
+.year:nth-child(even)::after {
+    left: -10px;
+}
+
+.year-card {
+    display: inline-block;
+    background: #fffaf5;
+    padding: 23px;
+    width: 100%;
+    max-width: 290px;
+    border: 1px solid #e7d8cc;
+    transition: .3s;
+}
+
+.year:hover .year-card,
+.year.active .year-card {
+    background: #f1dfd9;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px #62483f18;
+}
+
+.year-number {
+    color: #b87978;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.year-title {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.year-subtitle {
+    font-size: 12px;
+    color: #947a70;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+.memory-panel {
+    display: none;
+    background: #fffaf5;
+    max-width: 650px;
+    margin: 60px auto 20px;
+    padding: 35px;
+    box-shadow: 0 15px 35px #62483f15;
+    animation: appear .5s ease;
+}
+
+.memory-panel.show {
+    display: block;
+}
+
+.memory-panel h2 {
+    font-size: 30px;
+    font-weight: normal;
+    color: #b87978;
+    margin-bottom: 15px;
+}
+
+.memory-panel p {
+    color: #80665d;
+    line-height: 2;
+    font-size: 15px;
+    white-space: pre-line;
+}
+
+.memory-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: 22px 0;
+    display: none;
+}
+
+.memory-date {
+    color: #b87978;
+    font: 10px Arial, sans-serif;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.close-memory {
+    margin-top: 25px;
+    border: none;
+    background: #62483f;
+    color: #fffaf5;
+    padding: 12px 22px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 10px;
+}
+
+.last-note {
+    max-width: 600px;
+    margin: 75px auto 30px;
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.8;
+    color: #947a70;
+    font-style: italic;
+}
+
+.last-note span {
+    color: #b87978;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 55px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: #fffaf5;
+    background: #62483f;
+    padding: 14px 22px;
+    font: 10px Arial, sans-serif;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.nav-btn:hover {
+    background: #b87978;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width: 600px) {
+    .timeline::before {
+        left: 12px;
+    }
+
+    .year,
+    .year:nth-child(odd),
+    .year:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding: 12px 10px 12px 40px;
+        text-align: left;
+    }
+
+    .year:nth-child(odd)::after,
+    .year:nth-child(even)::after {
+        left: 2px;
+        right: auto;
+    }
+
+    .memory-panel {
+        padding: 25px;
+    }
+
+    .navigation {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="page">
+<div class="container">
+
+    <header class="header">
+        <p class="eyebrow">CHAPTER 05 — OUR LITTLE HISTORY</p>
+
+        <h1>Seven Years <span>of Us.</span></h1>
+
+        <p class="intro">
+            Seven years. Countless memories.<br>
+            One story that still happens to be my favourite.
+            <br><br>
+            Tap on a year. Let's go back for a little while.
+        </p>
+    </header>
+
+    <section class="timeline" id="timeline">
+
+        <div class="year" onclick="showMemory(0)">
+            <div class="year-card">
+                <p class="year-number">YEAR 01</p>
+                <h2 class="year-title">The Beginning</h2>
+                <p class="year-subtitle">Where it all started...</p>
+            </div>
+        </div>
+
+        <div class="year" onclick="showMemory(1)">
+            <div class="year-card">
+                <p class="year-number">YEAR 02</p>
+                <h2 class="year-title">Getting Closer</h2>
+                <p class="year-subtitle">A little more of you and me.</p>
+            </div>
+        </div>
+
+        <div class="year" onclick="showMemory(2)">
+            <div class="year-card">
+                <p class="year-number">YEAR 03</p>
+                <h2 class="year-title">Our Own Little World</h2>
+                <p class="year-subtitle">Memories only we understand.</p>
+            </div>
+        </div>
+
+        <div class="year" onclick="showMemory(3)">
+            <div class="year-card">
+                <p class="year-number">YEAR 04</p>
+                <h2 class="year-title">Through Everything</h2>
+                <p class="year-subtitle">The good, the messy, the real.</p>
+            </div>
+        </div>
+
+        <div class="year" onclick="showMemory(4)">
+            <div class="year-card">
+                <p class="year-number">YEAR 05</p>
+                <h2 class="year-title">More Memories</h2>
+                <p class="year-subtitle">And more reasons to smile.</p>
+            </div>
+        </div>
+
+        <div class="year" onclick="showMemory(5)">
+            <div class="year-card">
+                <p class="year-number">YEAR 06</p>
+                <h2 class="year-title">Still Us</h2>
+                <p class="year-subtitle">Some things never get old.</p>
+            </div>
+        </div>
+
+        <div class="year" onclick="showMemory(6)">
+            <div class="year-card">
+                <p class="year-number">YEAR 07</p>
+                <h2 class="year-title">And Here We Are</h2>
+                <p class="year-subtitle">My favourite chapter yet.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="memory-panel" id="memoryPanel">
+
+        <p class="memory-date" id="memoryDate"></p>
+
+        <h2 id="memoryTitle"></h2>
+
+        <img id="memoryImage" class="memory-image" alt="Our memory">
+
+        <p id="memoryText"></p>
+
+        <button class="close-memory" onclick="closeMemory()">
+            CLOSE MEMORY ×
+        </button>
+
+    </section>
+
+    <div class="last-note">
+        "If I had to live these seven years all over again,
+        I'd still want <span>you</span> in every single one."
+    </div>
+
+    <nav class="navigation">
+        <a href="open_when.html" class="nav-btn">← PREVIOUS</a>
+        <a href="final_letter.html" class="nav-btn">FINAL CHAPTER →</a>
+    </nav>
+
+</div>
+</main>
+
+<script>
+
+// Edit these memories with your own stories.
+
+const memories = [
+
+{
+    date: "YEAR 01",
+    title: "The Beginning",
+    text: `This is where our story began.
+
+I initially thought I'd add pictures from every birthday we've spent together. But then I realised that not every memory is meant to be revisited equally. So I thought, why not take a little trip down memory lane and relive only the moments that made us smile?
+And well, here we are, on the very first year of BEING US! 🎉♥️ ♡`,
+    image: "images/year1.jpeg"
+},
+
+{
+    date: "YEAR 02",
+    title: "Getting Closer",
+    text: `Somewhere along the way, talking to you became a habit.
+
+Remember this photo? I hope you still remember what day it was...
+
+Those days felt like a dream back then. If only going back were possible, I swear I wouldn't have wanted to grow up this much. I'd have happily stayed right there, in those little moments, for a little longer.
+
+And well, here we are, at the second year of BEING US — undoubtedly one of the hardest chapters we've had to live through. 🤌`,
+    image: "images/year2.jpeg"
+},
+
+{
+    date: "YEAR 03",
+    title: "Our Own Little World",
+    text: `By now, we had our own jokes, our own language,
+and a thousand little things nobody else would understand.
+
+This was taken on my birthday. I honestly thought you wouldn't show up at all. But then you took a day off, just for my birthday, just so you could spend the evening with me.
+
+Bhai, I don't think you realise how happy I was that day. I was genuinely the happiest. One of the happiest birthdays I've ever had, even to this day.
+
+And for that little effort, that evening, and that memory, there's still so much love in my heart. Always will be.
+
+3 YEARS OF BEING US! 👣❤️`,
+    image: "images/year3.jpeg"
+},
+
+{
+    date: "YEAR 04",
+    title: "Through Everything",
+    text: `Not every chapter is perfect.
+
+But every experience taught us something.
+This picture was taken after one of our biggest messes, right after two whole days of not talking to each other. And once things finally got sorted, here we were again.
+
+Funny how we were getting suspiciously close to each other without even realising it ourselves. We had no idea what we were slowly becoming to each other back then.
+
+But somehow, those little moments still feel so fresh, as if they happened just yesterday.
+
+4 YEARS OF BEING US! 💖`,
+    image: "images/year4.jpeg"
+},
+
+{
+    date: "YEAR 05",
+    title: "More Memories",
+    text: `This year was incredibly hard on us too. Especially on me. Even now, just thinking about it gives me goosebumps. I don't think I had ever imagined that someone could go through such a terribly difficult time.
+
+But anyways, every bad phase eventually comes to an end, and there's always something good waiting on the other side. And somehow, despite everything, this year too ended on a good note.
+
+5 YEARS OF BEING US! 🤍`,
+    image: "images/year5.jpeg"
+},
+
+{
+    date: "YEAR 06",
+    title: "Still Us",
+    text: `After all this time, there are still so many little things
+about you that make me happy.
+
+The best Pujo I've ever had in my entire life... (though I honestly don't know how this year's going to turn out).
+
+And obviously, a very, very special thanks to youuuuu for making it so special.
+
+Well, let me disclose a little fact — I stay because you stay. Had it not been for you, there would be no otherwise.
+
+6 YEARS OF BEING US, WITH HER BLESSINGS. 💌`,
+    image: "images/year6.jpeg"
+},
+
+{
+    date: "YEAR 07",
+    title: "And Here We Are",
+    text: `Seven years later, here we are.
+
+And if there's one thing I know,
+it's that It's only the beginning, and I honestly don't know how this one's going to turn out. But I really hope it brings nothing but good things for us, especially for you. And most of all, I hope this chapter leads us to forever. 🧿
+
+Hopefully, the 7th year is going to be magical. 🧿✨♾️♥️.
+
+Happy birthday, my favourite person. ♡`,
+    image: "images/year7.jpeg"
+}
+
+];
+
+function showMemory(index) {
+
+    const memory = memories[index];
+
+    document.querySelectorAll(".year").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    document.querySelectorAll(".year")[index].classList.add("active");
+
+    document.getElementById("memoryDate").innerText = memory.date;
+    document.getElementById("memoryTitle").innerText = memory.title;
+    document.getElementById("memoryText").innerText = memory.text;
+
+    const img = document.getElementById("memoryImage");
+
+    img.src = memory.image;
+    img.style.display = "block";
+
+    img.onerror = function() {
+        this.style.display = "none";
+    };
+
+    const panel = document.getElementById("memoryPanel");
+
+    panel.classList.remove("show");
+
+    void panel.offsetWidth;
+
+    panel.classList.add("show");
+
+    panel.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+function closeMemory() {
+    document.getElementById("memoryPanel").classList.remove("show");
+
+    document.querySelectorAll(".year").forEach(item => {
+        item.classList.remove("active");
+    });
+}
+
+</script>
+
+</body>
+</html>

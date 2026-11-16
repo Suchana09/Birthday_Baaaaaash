@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Secret ♡</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f7efe7;
+    font-family: Georgia, serif;
+    color: #62483f;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 390px;
+    background: #fffaf5;
+    padding: 40px 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(98,72,63,0.12);
+}
+
+.heart {
+    font-size: 42px;
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: 27px;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.subtitle {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #96766a;
+    margin-bottom: 28px;
+}
+
+h2 {
+    font-size: 19px;
+    font-weight: normal;
+    margin-bottom: 22px;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddc9bb;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    font-size: 22px;
+    letter-spacing: 10px;
+    outline: none;
+    color: #62483f;
+}
+
+input:focus {
+    border-color: #a77c70;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 10px;
+    background: #a77c70;
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #8e655a;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #a45c55;
+    min-height: 20px;
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #b49a8e;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="heart">♡</div>
+
+    <h1>A little secret for you</h1>
+
+    <p class="subtitle">
+        Before you enter, Mr. Birthday Boy...<br>
+        There's something waiting just for you.
+    </p>
+
+    <h2>Enter your phone password</h2>
+
+    <input
+        type="password"
+        id="password"
+        placeholder="••••"
+        maxlength="4"
+        inputmode="numeric"
+        autocomplete="off"
+    >
+
+    <button onclick="checkPassword()">
+        Let me in ♡
+    </button>
+
+    <p id="message"></p>
+
+    <div class="footer">
+        Only you know this one. ♡
+    </div>
+
+</div>
+
+<script>
+function checkPassword() {
+
+    const enteredPassword =
+        document.getElementById("password").value;
+
+    if (enteredPassword === "0079") {
+
+        window.location.href = "home.html";
+
+    } else {
+
+        document.getElementById("message").innerText =
+        "Nice try, Mr. Birthday Boy! Try again. 🤭";
+
+        document.getElementById("password").value = "";
+    }
+}
+</script>
+
+</body>
+</html>
